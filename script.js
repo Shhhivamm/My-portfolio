@@ -1,0 +1,455 @@
+// Image data
+window.__AVATAR__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAMAAgAFAAEABwAEABQAEgADAAEAABAAEwABAAEAEAAUAAEAEgABAAEAEAAVAAEAEgABAAEAEAAWAAEAEgABAAEAEAAXAAEAEgABAAEAEAAAAABIAAAAAQAAAEgAEAA"; // Avatar placeholder - replace with actual base64 image
+
+// Data Constants
+const EXPERIENCE = [
+  {
+    role: 'B.Tech — Computer Science & Engineering',
+    company: 'Chandigarh Group of Colleges, Landran',
+    period: '2023 – 2027',
+    location: 'Chandigarh, India',
+    cgpa: '8.1/10',
+    desc: 'Building real-world projects alongside academics with focus on software engineering, DSA, AI/ML, and system design. Selected for SIH 2024 Final Round.'
+  }
+];
+
+const CERTS = [
+  'Python Programming Internship — CodSoft (2024)',
+  'Python for Data Science — NPTEL (Jul–Aug 2024)',
+  'AWS Cloud Operations, Cloud Security, Data Engineering (2023–2025)',
+  'Front-End Web Developer — Infosys Springboard (2025)',
+];
+
+const ACHIEVEMENTS = [
+  'Selected for the Final Round of Smart India Hackathon (SIH) 2024',
+  '3rd Position in Code Debugging Competition',
+  'Coordinated Career Launchpad & Career Sprint events under TPP Department',
+];
+
+const NAV_LINKS = ['About', 'Experience', 'Skills', 'Projects', 'Contact'];
+
+const SKILLS = [
+  { cat: 'Languages', icon: '</ >', items: ['C', 'C++', 'Python', 'JavaScript', 'HTML', 'CSS'], color: 'yellow' },
+  { cat: 'Frontend', icon: '⚛️', items: ['HTML', 'CSS', 'JavaScript', 'React.js', 'Tailwind CSS'], color: 'cyan' },
+  { cat: 'Backend', icon: '🔗', items: ['Node.js', 'Express.js', 'FastAPI', 'Python', 'REST APIs'], color: 'pink' },
+  { cat: 'Databases', icon: '🗄️', items: ['MySQL', 'MongoDB'], color: 'blue' },
+  { cat: 'Tools & OS', icon: '🔧', items: ['Windows', 'Linux', 'Git', 'Docker'], color: 'green' },
+  { cat: 'Core Concepts', icon: '🧠', items: ['DSA', 'OOPs', 'DBMS', 'Operating Systems', 'Computer Networks', 'Backend Development'], color: 'purple' },
+];
+
+const PROJECTS = [
+  {
+    name: 'Project 1',
+    tag: 'MERN',
+    role: 'Full Stack Developer',
+    duration: '2024',
+    desc: 'A full stack web application built with MongoDB, Express, React, and Node.js.',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express'],
+    link: '#'
+  },
+  {
+    name: 'Project 2',
+    tag: 'Python',
+    role: 'Backend Developer',
+    duration: '2024',
+    desc: 'A Python-based application with advanced features and AI integration.',
+    tech: ['Python', 'FastAPI', 'AI/ML'],
+    link: '#'
+  },
+];
+
+const AVATAR = window.__AVATAR__;
+
+// React Component: Cursor
+function Cursor() {
+  const dotRef = React.useRef(null);
+  const ringRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const move = (e) => {
+      if (dotRef.current) {
+        dotRef.current.style.left = e.clientX + 'px';
+        dotRef.current.style.top = e.clientY + 'px';
+      }
+      if (ringRef.current) {
+        ringRef.current.style.left = e.clientX + 'px';
+        ringRef.current.style.top = e.clientY + 'px';
+      }
+    };
+    window.addEventListener('mousemove', move);
+    return () => window.removeEventListener('mousemove', move);
+  }, []);
+
+  return (
+    <>
+      <div className="cursor-dot" ref={dotRef} />
+      <div className="cursor-ring" ref={ringRef} />
+    </>
+  );
+}
+
+// React Component: Marquee
+function Marquee() {
+  const items = [...SKILLS.flatMap(s => s.items), ...SKILLS.flatMap(s => s.items)];
+  return (
+    <div style={{ overflow: 'hidden', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '14px 0', background: 'var(--bg2)' }}>
+      <div className="marquee-track">
+        {items.map((s, i) => (
+          <span key={i} style={{ padding: '0 28px', color: 'var(--muted)', fontFamily: 'DM Mono,monospace', fontSize: '.8rem', whiteSpace: 'nowrap' }}>
+            <span style={{ color: 'var(--accent)', marginRight: 10 }}>◆</span>{s}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// React Component: Navigation
+function Nav({ dark, setDark }) {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', h);
+    return () => window.removeEventListener('scroll', h);
+  }, []);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  return (
+    <nav className={scrolled ? 'scrolled' : ''}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64, flexWrap: 'wrap', position: 'relative' }}>
+        <div className="syne" style={{ fontWeight: 800, fontSize: '1.15rem', letterSpacing: '-.02em', zIndex: 101 }}>Shivam S<span style={{ color: 'var(--accent)' }}>.</span></div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 32, zIndex: 101 }}>
+          <div style={{ display: 'flex', gap: 28 }} className="nav-links">
+            {NAV_LINKS.map(l => (
+              <a key={l} href={`#${l.toLowerCase()}`} style={{ color: 'var(--muted)', fontSize: '.85rem', fontFamily: 'DM Mono,monospace', textDecoration: 'none', transition: 'color .2s' }}
+                onMouseEnter={e => e.target.style.color = 'var(--accent)'}
+                onMouseLeave={e => e.target.style.color = 'var(--muted)'}
+              >{l}</a>
+            ))}
+          </div>
+          <button className="toggle-btn" onClick={() => setDark(d => !d)} title="Toggle theme">
+            <span className="mode-label left">LIGHT</span>
+            <div className="toggle-knob" />
+            <span className="mode-label right">DARK</span>
+          </button>
+          <button className={`hamburger-menu ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(m => !m)} title="Toggle menu"><span /><span /><span /></button>
+        </div>
+      </div>
+      <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+        {NAV_LINKS.map(l => (
+          <a key={l} href={`#${l.toLowerCase()}`} onClick={closeMobileMenu}>{l}</a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+// React Component: Hero Section
+function Hero() {
+  return (
+    <section id="hero" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden', paddingTop: 64 }}>
+      <div className="hero-deco" />
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: 'clamp(40px,5vw,80px) clamp(16px,5vw,24px)', position: 'relative', zIndex: 1, width: '100%', display: 'grid', gridTemplateColumns: '1fr auto', gap: 'clamp(30px,5vw,60px)', alignItems: 'center' }}>
+        {/* Left */}
+        <div>
+          <div style={{ marginBottom: 20, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <span className="mono" style={{ color: 'var(--accent)', fontSize: '.8rem' }}>01 /</span>
+            <span className="mono" style={{ color: 'var(--muted)', fontSize: '.8rem' }}>Chandigarh, India</span>
+            <span style={{ width: 40, height: 1, background: 'var(--border)', display: 'inline-block' }} />
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+            <span className="mono" style={{ color: 'var(--muted)', fontSize: '.8rem' }}>Open to internships</span>
+          </div>
+          <div className="hero-name" style={{ marginBottom: 24 }}>
+            <div>SHIVAM</div>
+            <div style={{ WebkitTextStroke: '2px var(--fg)', WebkitTextFillColor: 'transparent', color: 'transparent' }}>SHARMA</div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
+            <div style={{ width: 48, height: 1.5, background: 'var(--accent)' }} />
+            <span className="hero-sub">Full Stack Developer &amp; AI Enthusiast</span>
+          </div>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <a href="#projects"><button className="btn-primary">View Projects <span>→</span></button></a>
+            <a href="https://github.com/Shhhivamm" target="_blank" rel="noreferrer"><button className="btn-outline">GitHub ↗</button></a>
+          </div>
+        </div>
+        {/* Right: Avatar */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="avatar-frame">
+            <img src={AVATAR} alt="Shivam Sharma" />
+            <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
+              <span className="tag">Full‑Stack Ninja</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: About Section
+function About() {
+  return (
+    <section id="about" style={{ padding: 'clamp(60px,10vw,120px) 0', background: 'var(--bg2)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
+        <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
+          <div className="sec-label" style={{ marginBottom: 12 }}>02 / About Me</div>
+          <h2 className="sec-title">Building things<br />that <span className="accent-line">matter</span>.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(40px,8vw,80px)', alignItems: 'start' }}>
+          <div className="reveal">
+            <p style={{ color: 'var(--muted)', lineHeight: 1.9, marginBottom: 16, fontSize: '1.05rem' }}>
+              I'm Shivam, a B.Tech Computer Science student at Chandigarh Group of Colleges, Landran. An aspiring Software Developer and AI Intern with hands-on experience in Agentic AI, Retrieval-Augmented Generation (RAG), and MERN stack development.
+            </p>
+            <p style={{ color: 'var(--muted)', lineHeight: 1.9, fontSize: '1.05rem', marginBottom: 24 }}>
+              Proficient in Python, JavaScript, RESTful APIs, MongoDB, Git, and Docker — with strong foundations in Data Structures and OOP. Passionate about building scalable backend systems and AI-driven applications that solve real-world problems.
+            </p>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              {['MERN Stack', 'Agentic AI', 'RAG', 'Docker', 'DSA'].map(t => (<span key={t} className="tag">{t}</span>))}
+            </div>
+          </div>
+          <div className="reveal">
+            <div className="syne" style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--accent)' }}>LANGUAGES KNOWN</div>
+            <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
+              {['English', 'Hindi', 'Punjabi'].map(l => (<span key={l} style={{ border: '1px solid var(--border)', padding: '6px 16px', borderRadius: 2, fontFamily: 'DM Mono,monospace', fontSize: '.8rem' }}>{l}</span>))}
+            </div>
+            <div className="syne" style={{ fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--accent)' }}>INTERESTS</div>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              {['📷 Photography', '✈️ Traveling', '🎮 Gaming', '💪 Fitness'].map(i => (<span key={i} style={{ border: '1px solid var(--border)', padding: '6px 16px', borderRadius: 2, fontFamily: 'DM Mono,monospace', fontSize: '.8rem' }}>{i}</span>))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: Experience Section
+function Experience() {
+  return (
+    <section id="experience" style={{ padding: 'clamp(60px,10vw,120px) 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
+        <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
+          <div className="sec-label" style={{ marginBottom: 12 }}>03 / Journey</div>
+          <h2 className="sec-title">Where I've<br /><span style={{ color: 'var(--accent)' }}>been</span>.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(30px,5vw,48px)' }}>
+          {/* Education */}
+          <div>
+            <div className="mono" style={{ fontSize: '.72rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '.15em', marginBottom: 24 }}>Education</div>
+            {EXPERIENCE.map((e, i) => (
+              <div key={i} className="reveal" style={{ position: 'relative', paddingLeft: 28, marginBottom: 32 }}>
+                <div className="timeline-line" />
+                <div className="timeline-dot" />
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 8 }}>
+                  <span className="tag">{e.period}</span>
+                  <span className="mono" style={{ color: 'var(--muted)', fontSize: '.72rem' }}>{e.location}</span>
+                </div>
+                <div className="syne" style={{ fontSize: '1.3rem', fontWeight: 800, marginBottom: 4 }}>{e.role}</div>
+                <div style={{ color: 'var(--accent)', fontFamily: 'DM Mono,monospace', fontSize: '.82rem', marginBottom: 4 }}>{e.company}</div>
+                <div className="mono" style={{ color: 'var(--muted)', fontSize: '.75rem', marginBottom: 12 }}>CGPA: {e.cgpa}</div>
+                <p style={{ color: 'var(--muted)', lineHeight: 1.7, fontSize: '.92rem' }}>{e.desc}</p>
+              </div>
+            ))}
+            {/* Intermediate */}
+            <div className="reveal" style={{ position: 'relative', paddingLeft: 28, marginBottom: 32 }}>
+              <div className="timeline-line" />
+              <div className="timeline-dot" />
+              <span className="tag">2021 – 2022</span>
+              <div className="syne" style={{ fontSize: '1.3rem', fontWeight: 800, marginTop: 8, marginBottom: 4 }}>Intermediate (CBSE)</div>
+              <div style={{ color: 'var(--accent)', fontFamily: 'DM Mono,monospace', fontSize: '.82rem', marginBottom: 4 }}>Anil Kumar DAV Public School, Ismailabad</div>
+              <div className="mono" style={{ color: 'var(--muted)', fontSize: '.75rem' }}>94%</div>
+            </div>
+          </div>
+          {/* Certifications + Achievements */}
+          <div>
+            <div className="mono" style={{ fontSize: '.72rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '.15em', marginBottom: 24 }}>Certifications</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 48 }}>
+              {CERTS.map((c, i) => (
+                <div key={i} className="reveal" style={{ background: 'var(--bg2)', border: '1px solid var(--border)', padding: '12px 16px', borderRadius: 2 }}>
+                  <span className="mono" style={{ fontSize: '.78rem', color: 'var(--fg)' }}>{c}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mono" style={{ fontSize: '.72rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '.15em', marginBottom: 24 }}>Achievements</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {ACHIEVEMENTS.map((a, i) => (
+                <div key={i} className="reveal" style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <span style={{ color: 'var(--accent)', fontSize: '1.1rem', marginTop: 2 }}>★</span>
+                  <span style={{ color: 'var(--muted)', lineHeight: 1.6, fontSize: '.9rem' }}>{a}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: Skills Section
+function Skills() {
+  return (
+    <section id="skills" style={{ padding: 'clamp(60px,10vw,120px) 0', background: 'var(--bg2)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
+        <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
+          <div className="sec-label" style={{ marginBottom: 12 }}>04 / Skills</div>
+          <h2 className="sec-title">What I<br /><span style={{ color: 'var(--accent)' }}>work with</span>.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(clamp(200px,45vw,320px),1fr))', gap: 'clamp(16px,3vw,28px)', marginBottom: 'clamp(40px,8vw,64px)' }}>
+          {SKILLS.map(({ cat, icon, items, color }) => (
+            <div key={cat} className="reveal skill-card" data-color={color}>
+              <div className="skill-card-header">
+                <span className="skill-card-icon">{icon}</span>
+                <h3 className="skill-card-title">{cat}</h3>
+              </div>
+              <div className="skill-card-items">
+                {items.map(s => (<button key={s} className="skill-pill">{s}</button>))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="syne" style={{ fontSize: 'clamp(3rem,10vw,9rem)', fontWeight: 900, color: 'var(--bg)', WebkitTextStroke: '1px var(--border)', WebkitTextFillColor: 'transparent', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', letterSpacing: '-.03em' }}>
+          STACK
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: Projects Section
+function Projects() {
+  return (
+    <section id="projects" style={{ padding: 'clamp(60px,10vw,120px) 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
+        <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
+          <div className="sec-label" style={{ marginBottom: 12 }}>05 / Projects</div>
+          <h2 className="sec-title">Things I've<br /><span style={{ color: 'var(--accent)' }}>built</span>.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(clamp(280px,40vw,340px),1fr))', gap: 'clamp(16px,3vw,24px)' }}>
+          {PROJECTS.map((p, i) => (
+            <div key={i} className="proj-card reveal" style={{ padding: 'clamp(20px,4vw,36px)', borderRadius: 2 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <span className="tag">{p.tag}</span>
+                <a href={p.link} style={{ color: 'var(--accent)', textDecoration: 'none', fontSize: '1.2rem' }} title="View project">↗</a>
+              </div>
+              <h3 className="syne" style={{ fontSize: 'clamp(1.3rem,4vw,1.6rem)', fontWeight: 800, marginBottom: 6 }}>{p.name}</h3>
+              <div className="mono" style={{ color: 'var(--accent)', fontSize: '.72rem', marginBottom: 4 }}>{p.role}</div>
+              <div className="mono" style={{ color: 'var(--muted)', fontSize: '.7rem', marginBottom: 16 }}>{p.duration}</div>
+              <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: 24, fontSize: '.92rem' }}>{p.desc}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {p.tech.map(t => (<span key={t} className="mono" style={{ fontSize: '.7rem', color: 'var(--muted)', padding: '3px 8px', border: '1px solid var(--border)', borderRadius: 2 }}>{t}</span>))}
+              </div>
+            </div>
+          ))}
+          <div className="proj-card reveal" style={{ padding: 'clamp(20px,4vw,36px)', borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 280, borderStyle: 'dashed', textAlign: 'center' }}>
+            <div className="syne" style={{ fontSize: '3rem', fontWeight: 900, color: 'var(--border)', marginBottom: 12 }}>+</div>
+            <div className="mono" style={{ color: 'var(--muted)', fontSize: '.8rem' }}>More coming soon</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: Contact Section
+function Contact() {
+  const [form, setForm] = React.useState({ name: '', email: '', msg: '' });
+
+  return (
+    <section id="contact" style={{ padding: 'clamp(60px,10vw,120px) 0', background: 'var(--bg2)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
+        <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
+          <div className="sec-label" style={{ marginBottom: 12 }}>06 / Contact</div>
+          <h2 className="sec-title">Let's build<br /><span style={{ color: 'var(--accent)' }}>something</span>.</h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(40px,8vw,80px)' }}>
+          <div className="reveal">
+            <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginBottom: 40, fontSize: '1.05rem' }}>
+              I'm actively looking for internship opportunities in software development and AI. Whether it's a project, opportunity, or just a chat — feel free to reach out!
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {[
+                { label: 'Email', val: 'Shivamsharma5830@gmail.com', href: 'mailto:Shivamsharma5830@gmail.com' },
+                { label: 'LinkedIn', val: 'shivam-sharma-71868626b', href: 'https://www.linkedin.com/in/shivam-sharma-71868626b/' },
+                { label: 'GitHub', val: 'Shhhivamm', href: 'https://github.com/Shhhivamm' },
+              ].map(({ label, val, href }) => (
+                <div key={label} style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                  <div className="mono" style={{ color: 'var(--accent)', fontSize: '.72rem', paddingTop: 3, minWidth: 64 }}>{label}</div>
+                  <a href={href} target="_blank" rel="noreferrer" style={{ color: 'var(--fg)', textDecoration: 'none', borderBottom: '1px solid var(--border)', paddingBottom: 2, transition: 'border-color .2s', wordBreak: 'break-word' }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--accent)'}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+                  >{val}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <input className="contact-input" placeholder="Your Name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+            <input className="contact-input" type="email" placeholder="Your Email" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
+            <textarea className="contact-input" placeholder="Your Message" rows={5} style={{ resize: 'vertical' }} value={form.msg} onChange={e => setForm(f => ({ ...f, msg: e.target.value }))} />
+            <a href={`mailto:Shivamsharma5830@gmail.com?subject=Hello Shivam!&body=${encodeURIComponent(form.msg)}`}>
+              <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Send Message →</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// React Component: Footer
+function Footer() {
+  return (
+    <footer style={{ borderTop: '1px solid var(--border)', padding: 'clamp(20px,4vw,32px) 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, fontSize: 'clamp(.8rem,2vw,1rem)' }}>
+      <div className="syne" style={{ fontWeight: 800, fontSize: 'clamp(.8rem,2vw,.9rem)' }}>SHIVAM SHARMA <span style={{ color: 'var(--accent)' }}>©2025</span></div>
+      <div className="mono" style={{ color: 'var(--muted)', fontSize: 'clamp(.65rem,1.5vw,.72rem)' }}>Built with React + Tailwind</div>
+      <div style={{ display: 'flex', gap: 'clamp(12px,3vw,20px)' }}>
+        {[{ l: 'LinkedIn', h: 'https://www.linkedin.com/in/shivam-sharma-71868626b/' }, { l: 'GitHub', h: 'https://github.com/Shhhivamm' }, { l: 'Email', h: 'mailto:Shivamsharma5830@gmail.com' }].map(({ l, h }) => (
+          <a key={l} href={h} target="_blank" rel="noreferrer" className="mono" style={{ color: 'var(--muted)', fontSize: 'clamp(.65rem,1.5vw,.75rem)', textDecoration: 'none', transition: 'color .2s', minHeight: 44, display: 'flex', alignItems: 'center' }}
+            onMouseEnter={e => e.target.style.color = 'var(--accent)'}
+            onMouseLeave={e => e.target.style.color = 'var(--muted)'}
+          >{l}</a>
+        ))}
+      </div>
+    </footer>
+  );
+}
+
+// React Component: Main App
+function App() {
+  const [dark, setDark] = React.useState(false);
+
+  React.useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+  }, [dark]);
+
+  React.useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: .12 });
+    els.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  return <>
+    <Cursor />
+    <Nav dark={dark} setDark={setDark} />
+    <Hero />
+    <Marquee />
+    <About />
+    <Experience />
+    <Skills />
+    <Projects />
+    <Contact />
+    <Footer />
+  </>;
+}
+
+// Render React app
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
