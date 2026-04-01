@@ -23,7 +23,7 @@
     // ========== DATA CONSTANTS ==========
     window.__AVATAR__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAMAAgAFAAEABwAEABQAEgADAAEAABAAEwABAAEAEAAUAAEAEgABAAEAEAAVAAEAEgABAAEAEAAWAAEAEgABAAEAEAAXAAEAEgABAAEAEAAAAABIAAAAAQAAAEgAEAA";
 
-    const EXPERIENCE = [
+    const EDUCATION = [
       {
         role: 'B.Tech — Computer Science & Engineering',
         company: 'Chandigarh Group of Colleges, Landran',
@@ -31,6 +31,22 @@
         location: 'Chandigarh, India',
         cgpa: '8.1/10',
         desc: 'Building real-world projects alongside academics with focus on software engineering, DSA, AI/ML, and system design. Selected for SIH 2024 Final Round.'
+      },
+      {
+        role: 'Intermediate (CBSE)',
+        company: 'Anil Kumar DAV Public School, Ismailabad, Kurukshetra',
+        period: '2021 – 2022',
+        location: 'Ismailabad, Kurukshetra',
+        cgpa: '94%',
+        desc: ''
+      },
+      {
+        role: 'Matriculation (CBSE)',
+        company: 'Anil Kumar DAV Public School, Ismailabad, Kurukshetra',
+        period: '2019 – 2020',
+        location: 'Ismailabad, Kurukshetra',
+        cgpa: '92%',
+        desc: ''
       }
     ];
 
@@ -47,7 +63,7 @@
       'Coordinated Career Launchpad & Career Sprint events under TPP Department',
     ];
 
-    const NAV_LINKS = ['About', 'Experience', 'Skills', 'Projects', 'Contact'];
+    const NAV_LINKS = ['About', 'Education', 'Skills', 'Projects', 'Contact'];
 
     const SKILLS = [
       { cat: 'Languages', icon: '</>', items: ['C', 'C++', 'Python', 'JavaScript', 'HTML', 'CSS'], color: 'yellow' },
@@ -60,6 +76,15 @@
 
     const PROJECTS = [
       {
+        name: 'StudyReady – AI Powered Learning Assistant',
+        tag: 'Python / RAG',
+        role: 'AI & Backend Developer',
+        duration: 'Ongoing (Major Project)',
+        desc: 'Developed an AI-powered platform to query educational website content using a chatbot interface. Implemented RAG-based retrieval to generate accurate responses from learning materials. Built backend services with FastAPI for content processing and AI integration. Designed a web interface for students to input URLs and interact with study resources.',
+        tech: ['Python', 'FastAPI', 'HTML', 'CSS', 'JavaScript', 'RAG', 'NLP'],
+        link: '#'
+      },
+      {
         name: 'AI Chatbot with RAG',
         tag: 'MERN',
         role: 'Full Stack Developer',
@@ -69,12 +94,12 @@
         link: '#'
       },
       {
-        name: 'Python Data Analyzer',
-        tag: 'Python',
-        role: 'Backend Developer',
+        name: 'Meditrack - Hospital Management System',
+        tag: 'MERN',
+        role: 'Frontend Developer',
         duration: '2024',
-        desc: 'A Python-based data analysis tool with machine learning capabilities and visualization. Processes large datasets efficiently and provides insights.',
-        tech: ['Python', 'FastAPI', 'Data Science', 'ML'],
+        desc: 'Built a responsive React frontend with real-time patient tracking and queuing, integrated REST API and MongoDB for data flow, and used Google Maps API for location-based healthcare services.',
+        tech: ['React.js', 'Node.js', 'MongoDB', 'CSS', 'Google Maps API' ],
         link: '#'
       },
     ];
@@ -238,9 +263,9 @@
       );
     }
 
-    function Experience() {
+    function Education() {
       return (
-        <section id="experience" style={{ padding: 'clamp(60px,10vw,120px) 0' }}>
+        <section id="education" style={{ padding: 'clamp(60px,10vw,120px) 0' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(16px,5vw,24px)' }}>
             <div className="reveal" style={{ marginBottom: 'clamp(40px,8vw,64px)' }}>
               <div className="sec-label" style={{ marginBottom: 12 }}>03 / Journey</div>
@@ -249,7 +274,7 @@
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: 'clamp(30px,5vw,48px)' }}>
               <div>
                 <div className="mono" style={{ fontSize: '.72rem', color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '.15em', marginBottom: 24 }}>Education</div>
-                {EXPERIENCE.map((e, i) => (
+                {EDUCATION.map((e, i) => (
                   <div key={i} className="reveal" style={{ position: 'relative', paddingLeft: 28, marginBottom: 32 }}>
                     <div className="timeline-line" />
                     <div className="timeline-dot" />
@@ -439,7 +464,7 @@
           <Hero />
           <Marquee />
           <About />
-          <Experience />
+          <Education />
           <Skills />
           <Projects />
           <Contact />
